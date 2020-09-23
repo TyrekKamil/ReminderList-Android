@@ -12,3 +12,15 @@
 /captures
 .externalNativeBuild
 .cxx
+/.gradle/
+/gradle/
+/.idea/
+/build.gradle
+/gradle.properties
+/gradlew
+/gradlew.bat
+/local.properties
+/settings.gradle
+/app/.gitignore
+/app/build.gradle
+/app/proguard-rules.pro
