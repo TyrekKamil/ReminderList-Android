@@ -43,63 +43,64 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText text = findViewById(R.id.elementName);
-                Toast.makeText(getApplicationContext(), "Element Added: " + text.getText(), Toast.LENGTH_SHORT).show();
-                addToList(text.getText().toString(), true);
+                addToList(text.getText().toString(), false);
             }
         });
     }
 
-    private void addToList(String text, Boolean saveToPrefs) {
-        Log.i("ReminderList-App", "Add element");
+    private void addToList(final String text, Boolean initial) {
 
         final TextView textView = new TextView(MainActivity.this.getApplicationContext());
         final Button deleteBtn = new Button(MainActivity.this.getApplicationContext());
         final LinearLayout row = new LinearLayout(MainActivity.this.getApplicationContext());
 
-        row.setLayoutParams(new LinearLayout.LayoutParams
-                (LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
+        if(!taskForPrefs.contains(text) || initial) {
+            Log.i("ReminderList-App", "Add element" + text);
+            row.setLayoutParams(new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        deleteBtn.setText("X");
-        textView.setText(text);
-        row.addView(textView);
-        row.addView(deleteBtn);
-        row.setId(taskForPrefs.size());
+            deleteBtn.setText("X");
+            textView.setText(text);
+            row.addView(textView);
+            row.addView(deleteBtn);
+            row.setId(taskForPrefs.size());
 
-        linearLayout.addView(row);
+            linearLayout.addView(row);
 
-        if(saveToPrefs) {
-            saveData(text);
+            if(!initial) {
+                saveData(text.trim());
+            }
+
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeFromList(row, text);
+                }
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), "Element exists: " + text, Toast.LENGTH_SHORT).show();
         }
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeFromList(row);
-            }
-        });    }
 
-    private void removeFromList(LinearLayout row) {
-        Toast.makeText(getApplicationContext(), "Element Removed:" + row.getId(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void removeFromList(LinearLayout row, String text) {
+        Toast.makeText(getApplicationContext(), "Element Removed: " + text, Toast.LENGTH_SHORT).show();
         linearLayout.removeView(row);
-        taskForPrefs.remove(
-                taskForPrefs.get(row.getId() - 1));
+        taskForPrefs.remove(text);
         saveData("");
     }
 
     private void saveData(String taskName) {
-
         if(taskName != "") {
             taskForPrefs.add(taskName);
         }
-
         editor.putString("reminderList", taskForPrefs
                 .toString()
-                .replaceAll("[|]", "")
-        );
+                .substring(1, taskForPrefs.toString().length() - 1));
         editor.apply();
         Log.i("SharedPrefs: " , taskForPrefs.toString());
-
     }
 
     private void loadData() {
@@ -107,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         taskForPrefs = new ArrayList<String>(Arrays.asList(sharedPreferences.getString("reminderList", "").split(",")));
         Log.i("ReminderList-App", "HERE WE GO AGAIN " + taskForPrefs);
 
-        for (int i = 0; i < taskForPrefs.size() - 1; i++) {
-            addToList(taskForPrefs.get(i), false);
+        for (int i = 0; i < taskForPrefs.size(); i++) {
+            addToList(taskForPrefs.get(i), true);
         }
     }
 
