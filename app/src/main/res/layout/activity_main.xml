@@ -6,62 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="4dp"
-        android:gravity="center"
-        android:text="@string/Title"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/elementName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNewElement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="13dp"
         android:clickable="true"
         android:focusable="true"
         app:backgroundTint="#FF8383"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/taskList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/elementName"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <EditText
         android:id="@+id/elementName"
-        android:layout_width="326dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="13dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/name"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/taskList"
+        app:layout_constraintEnd_toStartOf="@+id/addNewElement"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteBtn" />
 
     <ScrollView
         android:id="@+id/taskList"
-        android:layout_width="395dp"
-        android:layout_height="583dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/elementName">
+        app:layout_constraintTop_toBottomOf="@+id/addNewElement">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -74,6 +66,35 @@
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="left" />
+        app:barrierDirection="left"
+        tools:layout_editor_absoluteX="411dp" />
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="21dp"
+        android:text="@string/deleteAll"
+        app:layout_constraintBottom_toTopOf="@+id/elementName"
+        app:layout_constraintEnd_toStartOf="@+id/remainedBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/remainedBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:text="@string/showRemained"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/deleteBtn"
+        app:layout_constraintTop_toTopOf="@+id/deleteBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

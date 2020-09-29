@@ -35,14 +35,18 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, Boolean> activeTasks;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private ArrayList<LinearLayout> linearLayouts;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        linearLayouts = new ArrayList<>();
 
         FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.addNewElement);
+        Button deleteBtn = (Button) findViewById(R.id.deleteBtn);
+
         linearLayout = (LinearLayout) findViewById(R.id.    linearLayout);
         sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -54,7 +58,16 @@ public class MainActivity extends AppCompatActivity {
                 EditText text = findViewById(R.id.elementName);
                 addToList(text.getText().toString(), false, false);
             }
+
         });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearPrefs();
+            }
+        });
+
     }
 
     private void addToList(final String text, Boolean initial, Boolean isChecked) {
@@ -85,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             row.setId(taskForPrefs.size());
 
             linearLayout.addView(row);
-
+            linearLayouts.add(linearLayout);
             if(!initial) {
                 saveName(text.trim());
             }
@@ -150,8 +163,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearPrefs() {
         editor.putString("reminderList", "");
-        // TODO clear shaderPrefs booleans, all arrays etc
+        for(String task: taskForPrefs) {
+            editor.remove(task);
+        }
+
+        activeTasks.clear();
+        taskForPrefs.clear();
         editor.apply();
+
+        for(LinearLayout linearLayout: linearLayouts) {
+            linearLayout.removeAllViews();
+        }
     }
 
 }

@@ -2,4 +2,6 @@
     <string name="app_name">ReminderList-Android</string>
     <string name="Title">Reminder List</string>
     <string name="name">Name</string>
+    <string name="deleteAll">Delete All</string>
+    <string name="showRemained">Remained</string>
 </resources>
